@@ -42,4 +42,6 @@ def detail(request,id):
             ModifyTask.save()
             return Response(ModifyTask.data)
         return Response(status=status.HTTP_400_BAD_REQUEST)
-
+    elif request.method == 'DELETE':
+        task.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
