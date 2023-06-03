@@ -21,3 +21,25 @@ def index(request):
         if task.is_valid():
             task.save()
             return Response(task.data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET','PUT','DELETE'])
+
+def detail(request,id):
+    
+    try:
+        task = Task.objects.get(pk=id)
+        
+    except Task.DoesNotExist :
+        return Response(status=status.HTTP_404_NOT_FOUND)
+        # handle get request
+    if request.method == 'GET':
+        serializers = TaskSerializers(task)
+        return Response(serializers.data)
+        # handle update request
+    elif request.method == 'PUT':
+        ModifyTask = TaskSerializers(task, data=request.data)
+        if ModifyTask.is_valid(): 
+            ModifyTask.save()
+            return Response(ModifyTask.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
