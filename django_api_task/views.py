@@ -9,7 +9,7 @@ from rest_framework import status
 
 def index(request):
     if request.method == 'GET':
-        task = Task.objects.all()
+        task = Task.objects.all().order_by('-id')
         serializers = TaskSerializers(task, many=True)
         data = {
             'task': serializers.data

@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mydjango_task_db_sr5',
         'USER': 'postgres',
-        'PASSWORD': '123',
+        'PASSWORD': '123456',
         'HOST': 'localhost',
         'PORT': '5432',
     },
