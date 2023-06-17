@@ -81,12 +81,22 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
 
+    # ! Mysql Server
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'mydjango_db_sr5',
+    #     'USER': 'root',
+    #     'PASSWORD': '',
+    #     'HOST': 'localhost',
+    #     'PORT': '3306',
+    # },
+
      # ! Postgres Server Heng
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mydjango_task_db_sr5',
         'USER': 'postgres',
-        'PASSWORD': '123456',
+        'PASSWORD': '123',
         'HOST': 'localhost',
         'PORT': '5432',
     },
