@@ -14,11 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from .views import index,detail
+from django.urls import path,include
+from .views import index,detail,TaskApiView,TaskDetailApiView,TaskViewSet
+from rest_framework.routers import DefaultRouter 
+
+
+router = DefaultRouter()
+router.register('viewsets',TaskViewSet,basename='viewset')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/task',index),
-    path('api/task/<int:id>',detail)
+    path('api/task/<int:id>',detail),
+    path("apiview/task",TaskApiView.as_view()),
+    path("apiview/task/<int:id>",TaskDetailApiView.as_view()),
+    path('',include(router.urls))
 ]
+
+
+# example
+# ! http://127.0.0.1:8000/viewsets/8/
