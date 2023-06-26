@@ -22,12 +22,6 @@ class TaskApiView(APIView):
             return Response(task.data, status=status.HTTP_201_CREATED)
         else: return Response({"message": 'Invalid data'},status=status.HTTP_400_BAD_REQUEST)
 
-        # put works all fields
-    def put(self,request):
-        return Response({'message': 'Hander put request'})
-        # patch works except fields not at all
-    def patch(self,request):
-        return Response({'message': 'Hander patch request'})
      
 class TaskDetailApiView(APIView):
     def get_detail(self,request,id=None):
