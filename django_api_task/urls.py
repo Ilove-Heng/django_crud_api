@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from .views import index,detail,TaskApiView,TaskDetailApiView,TaskViewSet
+from .views import index,detail,TaskApiView,TaskDetailApiView,TaskViewSet,myuserviewset,LoginApi
 from rest_framework.routers import DefaultRouter 
 
 
 router = DefaultRouter()
+# model view set
 router.register('viewsets',TaskViewSet,basename='viewset')
+router.register('auths',myuserviewset,basename='auth')
 
 
 urlpatterns = [
@@ -29,6 +31,7 @@ urlpatterns = [
     path('api/task/<int:id>',detail),
     path("apiview/task",TaskApiView.as_view()),
     path("apiview/task/<int:id>",TaskDetailApiView.as_view()),
+    path('login/',LoginApi.as_view()),
     path('',include(router.urls))
 ]
 

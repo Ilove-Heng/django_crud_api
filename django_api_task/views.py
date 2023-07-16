@@ -1,11 +1,15 @@
-from .models import Task
+from .models import Task, MyUser
 from django.http import JsonResponse,Http404
-from .serializers import TaskSerializers
+from .serializers import TaskSerializers,myUserSerializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status,viewsets
-
+from rest_framework.authentication import TokenAuthentication
+from .permissions import CheckOwnProfile,CheckOwnTask
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
 
 class TaskApiView(APIView):
     # Fetch all tasks
@@ -47,11 +51,46 @@ class TaskDetailApiView(APIView):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-        serializer_class  = TaskSerializers
         def get_queryset(self):
             return Task.objects.all().order_by('-id')
+        serializer_class  = TaskSerializers
+        
+        def perform_create(self,serializer):
+            serializer.save(created_by=self.request.user)
+
+        def partial_update(self, request, *args, **kwargs):
+            instance = self.get_object()
+            serializer = self.get_serializer(instance, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+            return Response(serializer.data)
+
+        def destroy(self, request, *args, **kwargs):
+            instance = self.get_object()
+            self.perform_destroy(instance)
+            return Response({"message": "Task deleted successfully"}, status=status.HTTP_200_OK)
+        
+        def perform_destroy(self, instance):
+            instance.delete()
 
 
+        authentication_classes = [TokenAuthentication]
+        permission_classes = [CheckOwnTask]
+
+
+
+class LoginApi(ObtainAuthToken):
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+
+class myuserviewset(viewsets.ModelViewSet):
+        serializer_class = myUserSerializers
+        def get_queryset(self):
+            return MyUser.objects.all()
+        
+        authentication_classes = [TokenAuthentication]
+        # permission_classes = [IsAuthenticated,CheckOwnProfile]
+        permission_classes = [CheckOwnProfile]
 
 
 

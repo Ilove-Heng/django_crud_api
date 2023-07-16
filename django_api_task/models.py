@@ -3,16 +3,6 @@ from django.db import models
 from datetime import date
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser,PermissionsMixin
 
-class Task(models.Model):
-    name=models.CharField(max_length=255)
-    description=models.TextField()
-    due_date=models.DateField(default=date.today)
-
-    def __str__(self) -> str:
-        return "Task: " + self.name
-
-    class Meta:
-        db_table='task'
 
 
 class MyUserManager(BaseUserManager):
@@ -87,3 +77,18 @@ class MyUser(AbstractBaseUser):
     
     class Meta:
         db_table='my_user'
+
+
+class Task(models.Model):
+    name=models.CharField(max_length=255)
+    description=models.TextField()
+    due_date=models.DateField(default=date.today)
+    created_by=models.ForeignKey(
+        MyUser, on_delete=models.CASCADE
+    )
+
+    def __str__(self) -> str:
+        return "Task: " + self.name
+
+    class Meta:
+        db_table='task'
