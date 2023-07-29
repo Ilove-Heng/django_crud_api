@@ -57,3 +57,8 @@ quit()
 # Init for supper user
 see documentation [How is python manage.py createsuperuser useful?](https://stackoverflow.com/questions/27472581/how-is-python-manage-py-createsuperuser-useful) 
 py manage.py createsuperuser
+
+
+
+# for imageFields
+pip install Pillow

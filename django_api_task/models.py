@@ -6,7 +6,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser,Permiss
 
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, email,name, date_of_birth,phone, password=None):
+    def create_user(self, email,name, date_of_birth,profile, phone, password=None):
         if not email:
             raise ValueError("Users must have an email address")
 
@@ -15,13 +15,14 @@ class MyUserManager(BaseUserManager):
             name=name,
             date_of_birth=date_of_birth,
             phone=phone,
+            profile=profile,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email,name, date_of_birth,phone, password=None):
+    def create_superuser(self, email,name, date_of_birth,profile,phone, password=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
@@ -32,6 +33,7 @@ class MyUserManager(BaseUserManager):
             date_of_birth=date_of_birth,
             phone=phone,
             password=password,
+            profile=profile,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -39,6 +41,12 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser):
+    def profile_dir_path(instance, filename):
+        ext = filename.split('.')[1]
+        new_file_name = "users_profile/%s.%s" % ("profile_"+ str(instance.id),ext)
+        return new_file_name
+
+
     email = models.EmailField(
         verbose_name="email address",
         max_length=255,
@@ -50,6 +58,7 @@ class MyUser(AbstractBaseUser):
     phone= models.CharField(max_length=255,null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    profile = models.ImageField(upload_to=profile_dir_path, null=True)
 
     objects = MyUserManager()
 
@@ -77,6 +86,8 @@ class MyUser(AbstractBaseUser):
     
     class Meta:
         db_table='my_user'
+
+
 
 
 class Task(models.Model):
