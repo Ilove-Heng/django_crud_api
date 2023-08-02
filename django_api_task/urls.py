@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path,include
 from .views import index,detail,TaskApiView,TaskDetailApiView,TaskViewSet,myuserviewset,LoginApi
 from rest_framework.routers import DefaultRouter 
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 router = DefaultRouter()
@@ -33,7 +35,7 @@ urlpatterns = [
     path("apiview/task/<int:id>",TaskDetailApiView.as_view()),
     path('login/',LoginApi.as_view()),
     path('',include(router.urls))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 # example
