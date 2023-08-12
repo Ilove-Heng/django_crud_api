@@ -1,64 +1,31 @@
-# Init project 
-package for rest api
-```pip install djangorestframework```
+# client
 
-register admin url
-```py manage.py createsuperuser```
+This template should help get you started developing with Vue 3 in Vite.
 
+## Recommended IDE Setup
 
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and
+disable
+Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-# Running services
-py .\manage.py runserver
+## Customize configuration
 
-# (optional)
-py .\manage.py makemigrations sr5_project_app 
+See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-py .\manage.py migrate
+## Project Setup
 
-py .\manage.py sqlmigrate sr5_project_app 0001
+```sh
+npm install
+```
 
-<!-- Driver for mysql -->
-pip install mysqlclient
+### Compile and Hot-Reload for Development
 
-<!-- Driver for pgsql -->
-pip install psycopg2
+```sh
+npm run dev
+```
 
-<!-- Driver for oracle -->
-pip install cx_Oracle
+### Compile and Minify for Production
 
-# Using Shell
-
-py .\manage.py shell
-
-from sr5_project_app.models import Article
-
-# Pratices
-Article.objects.all()
-Article.objects.all().values()
-
-x = Article()
-x.title = 'Welcome to lulu'
-x.content = 'Nice content'
-x.save()
-# Update the article
-x = Article.objects.all()[0]
-x.title = 'Love oun'
-x.save()
-x.delete()
-
-y = Article(title='new title', content='Welcome to lulu')
-y.save()
-
-# quit shell
-quit()
-
-# Admin dashboard
-=> should be migrate first
-# Init for supper user
-see documentation [How is python manage.py createsuperuser useful?](https://stackoverflow.com/questions/27472581/how-is-python-manage-py-createsuperuser-useful) 
-py manage.py createsuperuser
-
-
-
-# for imageFields
-pip install Pillow
+```sh
+npm run build
+```
